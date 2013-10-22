@@ -1,0 +1,9 @@
+------ Build started: Project: CSShips, Configuration: Debug Any CPU ------
+C:\Windows\Microsoft.NET\Framework\v2.0.50727\Csc.exe /noconfig /nowarn:1701,1702 /errorreport:prompt /warn:4 /define:DEBUG;TRACE /reference:C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.dll /reference:C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.Drawing.dll /reference:C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.Windows.Forms.dll /reference:C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.Xml.dll /debug+ /debug:full /optimize- /out:obj\Debug\CSShips.exe /target:exe etap7\etap7.cs Properties\AssemblyInfo.cs
+H:\Копия CSShip\CSShips\etap7\etap7.cs(51,18): warning CS0169: The private field 'Port.free' is never used
+H:\Копия CSShip\CSShips\etap7\etap7.cs(82,20): warning CS0169: The private field 'Ship.first' is never used
+H:\Копия CSShip\CSShips\etap7\etap7.cs(162,15): warning CS0414: The private field 'Window.num' is assigned but its value is never used
+
+Compile complete -- 0 errors, 3 warnings
+CSShips -> H:\Копия CSShip\CSShips\bin\Debug\CSShips.exe
+========== Build: 1 succeeded or up-to-date, 0 failed, 0 skipped ==========
