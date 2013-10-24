@@ -180,7 +180,7 @@ class Window : Form
       this.Size = new Size(1000, 1000);//размер окна
       this.BackColor = Color.Aqua;
 
-      num = 1;//задел на буд
+      //num = 1;//задел на буд
 
       //объекты портов
       port1 = new Port(1, 20, 20, 2000, this);   //зелёный порт
@@ -224,7 +224,7 @@ class Window : Form
       //объект интерфейсного элемента списка
       listBox = new ListBox();
       listBox.Location = new Point(200, 300);
-      listBox.Size = new Size(30, 100);
+      listBox.Size = new Size(100, 100);
       Controls.Add(listBox);
       
 
@@ -275,9 +275,11 @@ class Window : Form
 
     protected override void OnClosed(EventArgs e)
     {
-        ship.Finish();
-        ship2.Finish();
-        ship3.Finish();
+        for (int i = 0; i < ships.Count; i++)
+        {
+            Ship ship = (Ship)ships[i];
+            ship.Finish();
+        }
         port1.Finish();
         port2.Finish();
         port3.Finish();

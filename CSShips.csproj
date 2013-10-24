@@ -36,7 +36,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="etap9speed\etap9chudokostul.cs">
+    <Compile Include="etap10knopki+massiv\etap10.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -47,6 +47,7 @@
     <Folder Include="etap3%28buben%29\" />
     <Folder Include="etap4haos\" />
     <Folder Include="etap8\" />
+    <Folder Include="etap9speed\" />
     <Folder Include="etat5okk\" />
     <Folder Include="PererabotkaEtap3\" />
   </ItemGroup>
