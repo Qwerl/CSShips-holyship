@@ -163,6 +163,7 @@ class Ship:objectONmap //класс кораблей
 //окошко
 class Window : Form
 {
+  private int shipCount = 0; // используется в DEL_ALL
   private int num;
   Port port1, port2, port3;
   //Ship ship,ship2,ship3;
@@ -180,8 +181,9 @@ class Window : Form
       randomSpeed = new Random();
 
       //свойства окна
-      this.Size = new Size(1000, 1000);//размер окна
-      this.BackColor = Color.Aqua;
+      this.Size = new Size(800, 800);//размер окна
+      //this.BackColor = Color.Aqua;
+      this.BackgroundImage = new Bitmap("C:\\water.jpg");
 
       //num = 1;//задел на буд
 
@@ -189,10 +191,10 @@ class Window : Form
       port1 = new Port(1, 20, 20, 2000, this);   //зелёный порт
       port1.evPort += new DelShip(this.HandlerEv);
 
-      port2 = new Port(2, 920, 20, 2000, this); //синий порт
+      port2 = new Port(2, 720, 20, 2000, this); //синий порт
       port2.evPort += new DelShip(this.HandlerEv);
 
-      port3 = new Port(3, 500, 900, 2000, this);  //желтый порт
+      port3 = new Port(3, 350, 650, 2000, this);  //желтый порт
       port3.evPort += new DelShip(this.HandlerEv);
 
       //объекты кораблей
@@ -219,8 +221,9 @@ class Window : Form
       //объект кнопки ADD
       butAdd = new Button();
 
-      butAdd.Location = new Point(50, 350);
-      butAdd.Size = new Size(40, 20);
+      butAdd.Location = new Point(30, 350);
+      butAdd.BackColor = Color.Green;
+      butAdd.Size = new Size(45, 20);
       butAdd.Text = "ADD";
       Controls.Add(butAdd);
       butAdd.Click += new EventHandler(Add);
@@ -228,8 +231,9 @@ class Window : Form
       //объект кнопки DEL
       butDel = new Button();
 
-      butDel.Location = new Point(100, 350);
-      butDel.Size = new Size(40, 20);
+      butDel.Location = new Point(85, 350);
+      butDel.BackColor = Color.Red;
+      butDel.Size = new Size(45, 20);
       butDel.Text = "DEL";
       Controls.Add(butDel);
       butDel.Click += new EventHandler(Del);
@@ -237,16 +241,17 @@ class Window : Form
       //объект кнопки DEL_ALL
       butDelAll = new Button();
 
-      butDelAll.Location = new Point(60, 400);
-      butDelAll.Size = new Size(80, 40);
+      butDelAll.BackColor = Color.DarkRed;
+      butDelAll.Location = new Point(30, 375);
+      butDelAll.Size = new Size(100, 40);
       butDelAll.Text = "DEL_ALL";
       Controls.Add(butDelAll);
       butDelAll.Click += new EventHandler(DelAll);
 
       //объект интерфейсного элемента списка(прямоугольник с цифрами-номерами кораблей)
       listBox = new ListBox();
-      listBox.Location = new Point(50, 450);
-      listBox.Size = new Size(100, 500);
+      listBox.Location = new Point(30, 420);
+      listBox.Size = new Size(100, 340);
       Controls.Add(listBox);
       
 
@@ -272,27 +277,37 @@ class Window : Form
 
     private void Del(object obj, EventArgs args)
     {
-        if (listBox.SelectedIndex == -1)
-            MessageBox.Show("Выберете номер удаляемого корабля");
+        if (listBox.Items.Count == 0)
+            MessageBox.Show("Сначала создайте хотябы один корабль", "Ошибка");
         else
         {
-            int numSel = (int)listBox.SelectedItem;
-            for (int i = 0; i < ships.Count; i++)
+            if (listBox.SelectedIndex == -1)
+                MessageBox.Show("Выберите номер удаляемого корабля из списка", "Ошибка");
+            else
             {
-                Ship ship = (Ship)ships[i];
-                if (ship.N == numSel)
+                int numSel = (int)listBox.SelectedItem;
+                for (int i = 0; i < ships.Count; i++)
                 {
-                    ships.Remove(ship);
-                    listBox.Items.Remove(numSel);
-                    ship.Finish();
+                    Ship ship = (Ship)ships[i];
+                    if (ship.N == numSel)
+                    {
+                        ships.Remove(ship);
+                        listBox.Items.Remove(numSel);
+                        ship.Finish();
+                    }
                 }
             }
         }
     }
 
-    private void DelAll(object obj, EventArgs args)                     //ДОРАБОТАТЬ
+    private void DelAll(object obj, EventArgs args)
     {
-        for (int i = 0, j = 1; i < ships.Count; j++)  // i для работы с массивом кораблей  j для рабыты со списком
+        if (ships.Count == 0)
+            MessageBox.Show("не создано ни одного корабля", "Ошибка");
+        
+        shipCount+= ships.Count;
+        Console.WriteLine("shipCount = {0}", shipCount);
+      /*  for (int i = 0, j = 1; j <= shipCount; j++)  // i для работы с массивом кораблей  j для рабыты со списком
         {
             Ship ship = (Ship)ships[i];
             ships.Remove(ship);
@@ -301,22 +316,24 @@ class Window : Form
             Console.WriteLine("3for = {0}", j);
             
         }
-/*        for (int i = 0; i <= ships.Count; i++)
+     */
+
+        for (int i = 0; i <= shipCount; i++) //убийца списка
         {
 
-        //    listBox.Items.Remove(i);
-        //    //i--;
-        //    if (i<ships.Count)
-        //    {
-        //        Ship ship = (Ship)ships[i];
-        //        //ships.Remove(ship);
-        //        ship.Finish();
-        //    }
+            listBox.Items.Remove(i);
+            //i--;
+            //if (i<ships.Count)
+            //{
+                //Ship ship = (Ship)ships[i];
+                //ships.Remove(ship);
+                //ship.Finish();
+        }
         //    Console.WriteLine("1for = {0}", i);
             
-        }
+        
 
-        for (int i = 0,j=1; i !=1 ; i++ ,j++)
+        for (int i = 0; i < ships.Count; i++)
         {
 
             if (i < ships.Count)
@@ -325,17 +342,17 @@ class Window : Form
                 //listBox.Items.Remove(j);
                 ships.Remove(ship);
                 ship.Finish();
-                Console.WriteLine("2for = {0}", j);
+                //Console.WriteLine("2for = {0}", i);
                 i--;                                        //КОСТЫЛЬ зацикливающий цикл
             }
             else
             {
-                Console.WriteLine("break");
+                //Console.WriteLine("break");
                 break;
             }
                 
-            Console.WriteLine("3for = {0}", i);
-        }*/
+            //Console.WriteLine("3for = {0}", i);
+        }
 
     }
 
@@ -344,9 +361,13 @@ class Window : Form
       
       base.OnPaint(e);
 
-      e.Graphics.FillEllipse(new SolidBrush(Color.FromArgb(0, 255, 0)), port1.X, port1.Y, 50, 50);      //Порт1
-      e.Graphics.FillEllipse(new SolidBrush(Color.FromArgb(0, 0, 255)), port2.X, port2.Y, 50, 50);      //Порт2
-      e.Graphics.FillEllipse(new SolidBrush(Color.FromArgb(255, 255, 0)), port3.X, port3.Y, 50, 50);    //Порт3
+      Graphics g = e.Graphics;
+      g.DrawImage(Image.FromFile("C:\\PORT1prozrachn.png"), new Point(port1.X - 30, port1.Y));
+      g.DrawImage(Image.FromFile("C:\\PORT3prozrachn2.png"), new Point(port2.X - 50, port2.Y));
+      g.DrawImage(Image.FromFile("C:\\PORT3prozrachn2.png"), new Point(port3.X, port3.Y - 50));
+      //e.Graphics.FillEllipse(new SolidBrush(Color.FromArgb(0, 255, 0)), port1.X, port1.Y, 50, 50);      //Порт1
+      //e.Graphics.FillEllipse(new SolidBrush(Color.FromArgb(0, 0, 255)), port2.X, port2.Y, 50, 50);      //Порт2
+      //e.Graphics.FillEllipse(new SolidBrush(Color.FromArgb(255, 255, 0)), port3.X, port3.Y, 50, 50);    //Порт3
       /*
       e.Graphics.FillEllipse(new SolidBrush(Color.FromArgb(255, 0, 0)), ship.X, ship.Y, 50, 20); //нарисовать элипс с цветом красным  , координатами корабля1 шириной 50 высотой 20
       e.Graphics.DrawString(ship.N.ToString(), aFont, Brushes.Black, ship.X + 18, ship.Y);      //надпись на первый корабль
